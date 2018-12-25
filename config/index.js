@@ -11,12 +11,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        // '/teacher':{
-        //     target:'http://localhost:3000'
-        // },
-        // '/student':{
-        //     target:'http://localhost:3000'
-        // }
+        '/teachers':{
+            target:'http://localhost:3000'
+        },
+        '/students':{
+            target:'http://localhost:3000'
+        }
     },
 
     // Various Dev Server settings

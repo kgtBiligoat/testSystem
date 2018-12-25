@@ -8,6 +8,8 @@
 
 <script>
 	import asideCom from './satcomponents/asideCom'
+	import mainCom from './satcomponents/mainCom'
+	import headerCom from './satcomponents/headerCom'
 	export default {
 		data(){
 			return {
@@ -15,7 +17,9 @@
 			}
 		},
 		components:{
-			asideCom
+			asideCom,
+			headerCom,
+			mainCom
 		},
 	}
 </script>

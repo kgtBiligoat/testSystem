@@ -1,74 +1,77 @@
 <template>
 	<div id="aside">
-		<div class="userMes">
-			用户类型：
-			用户名：
-		</div>
-		<div class="operate">
-			<ul>
-				<li v-for="item in msg">{{item}}</li>
-			</ul>
-		</div>
+		<img src="@/assets/login.png" 
+			style="position:absolute;
+			left:7px;
+			top:20px;
+			z-index:100;
+		">
+		<el-menu 
+			:default-active="activeIndex" 
+			class="el-menu" 
+		>
+			<el-menu-item index="1" >
+				<i class="el-icon-setting"></i>
+				<router-link to="/student/geren">个人设置</router-link>
+			</el-menu-item>
+			<el-menu-item index="2">
+				<i class="bfui-icon-user" style="margin:7px;"></i>
+				<router-link to="/student/xiaozu">小组信息</router-link>
+			</el-menu-item>
+			<el-menu-item index="3" >
+				<i class="el-icon-document"></i>
+				<router-link to="/student/zuoye">作业信息</router-link>
+			</el-menu-item>
+			<el-menu-item index="4" @click="goOut">
+				<i class="bfui-icon-sign-out" style="margin:5px;"></i>
+				退出登录
+			</el-menu-item>
+		</el-menu>
 	</div>
 </template>
 
 <script>
 	export default{
-		data(){
+		data() {
 			return {
-				msg:['基本信息修改','作业信息','登出']
+				activeIndex: '1',
+			};
+		},
+		methods: {
+			goOut() {
+				this.$message('退出登录')
+				setTimeout(() => {
+					this.$router.push('/')
+				},1000)
 			}
 		}
 	}
 </script>
 
-<style scoped>
+<style scoped lang="less">
 	#aside{
+		font-size: 20px;
 		height: 100%;
-		width: 30%;
-		background: rgba(255,100,0,.5);
+		width: 20%;
 		position: fixed;
 		left: 0px;
 		top: 0px;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
+		justify-content: space-around;
 		align-content: center;
+		.el-menu {
+			height: 100%;
+			display: flex;
+			flex-direction: column ;
+			align-content: center;	
+			justify-content: center;	
+			font-size: 50px;
+			.el-menu-item {
+				font-size: 20px;
+			}
+		}
 	}
-	.userMes{
-		height: 20%;
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-content: center;
 
-	}
-	.operate{
-		height: 80%;
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-content: center;
-	}
-	ul{
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-content: center;
-		margin: 0px;
-		padding: 0px;
-	}
-	ul li{
-		transform: translateY(-90px);
-		text-align: center;
-		width: 100%;
-		font-size: 29px;
-		list-style: none;
-		margin-top: 20px;
-		color: rgba(0,0,0,.5);
-	}
-	ul li:hover{
-		cursor: pointer;
-	}
+
 </style>
