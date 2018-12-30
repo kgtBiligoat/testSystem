@@ -62,10 +62,12 @@ import { create } from 'domain';
       getKetiMess() {
           axios.get('/students/getKetiMess')
           .then(data => {
+              let group = parseInt(data.data.group)
               let keti = {
-                  'keti': data.data.keti,
-                  'mess': data.data.ketiMess
+                  'keti': data.data.keti[group-1],
+                  'mess': data.data.mess[group-1]
               }
+              console.log(keti)
               this.keti.push(keti)
           })
       }

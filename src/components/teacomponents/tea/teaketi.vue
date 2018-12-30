@@ -9,6 +9,9 @@
             <el-form-item label="课题要求">
                 <el-input type="textarea" v-model="form.mess"></el-input>
             </el-form-item>
+            <el-form-item label="限制人数">
+                <el-input v-model="form.people"></el-input>
+            </el-form-item>
             <el-form-item label="验收截止日期"><br>
                 <el-date-picker
                     v-model="form.time"
@@ -31,7 +34,8 @@ import axios from 'axios'
           form: {
               name: '',
               mess: '',
-              time: ''
+              time: '',
+              people: ''
           }
       }
     },
@@ -41,10 +45,17 @@ import axios from 'axios'
         axios.post('/teachers/setKeti', {
                 name: this.form.name,
                 mess: this.form.mess,
-                time: this.form.time
+                time: this.form.time,
         })
         .then(data => {
-            console.log(data)
+            if(data.data.status == 1){
+                this.form.name = ''
+                this.form.mess = ''
+                this.form.time = ''
+                this.$message('发布成功')
+                this.$router.push('/teacher/teaXiaozu')
+             }
+             else this.$message('发布失败')
         })
       }
     }

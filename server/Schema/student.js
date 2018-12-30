@@ -9,7 +9,10 @@ var studentSchema = new mongoose.Schema({
   "phone": String,
   "select": String,
   "teacher": String,
-  "group": String
+  "group": String,
+  "filename": String,
+  "hege": String,
+  "pingjia": String
 });
 
 module.exports = mongoose.model("Students",studentSchema);

@@ -4,9 +4,9 @@ var teacherSchema = new mongoose.Schema({
   "userId":String,
   "userName":String,
   "userPwd":String,
-  "keti": String,
-  "ketiMess": String,
-  "ketiTime": String,
+  "keti": Array,
+  "ketiMess": Array,
+  "ketiTime": Array,
   "phone": String
 });
 

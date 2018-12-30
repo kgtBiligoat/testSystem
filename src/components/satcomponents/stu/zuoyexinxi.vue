@@ -7,6 +7,8 @@
                 drag
                 fit
                 multiple
+                :file-list="fileList"
+                :on-remove="test"
             >
                 <i class="el-icon-plus"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -23,13 +25,15 @@
         </div>
         <el-table
             border
+            :data='pingjia'
         >
-            <el-table-column label="文件信息" width="180" >
+            <el-table-column label="文件信息" width="180" prop="file">
 
             </el-table-column>
-            <el-table-column label="教师评价" width="730" >
+            <el-table-column label="教师评价" width="630" prop="pingjia">
 
             </el-table-column>
+            <el-table-column label="是否合格" width="100" prop="hege"></el-table-column>
         </el-table>
     </div>
 </template>
@@ -39,9 +43,11 @@ import axios from 'axios'
   export default {
     data() {
       return {
+          fileList: [],
           table: [
               { name:'' ,phone:'' }
-          ]
+          ],
+          pingjia: []
       }
     },
     methods: {
@@ -51,10 +57,40 @@ import axios from 'axios'
                 this.table[0].name = data.data.username
                 this.table[0].phone = data.data.phone
             })
+        },
+        getKetiMess() {
+            axios.get('/students/getMess')
+            .then(data => {
+                if(data.data.name)
+                this.fileList.push(data.data)
+                console.log(this.fileList)
+            })
+        },
+        test(file,fileList) {
+           axios.get('/students/deleFile')
+           .then(data => {
+               console.log('删除成功')
+           })
+        },
+        getPinjiaMess() {
+            axios.get('/students/getPingjia')
+            .then(data => {
+                let temp = {}
+                temp.file = data.data.filename
+                temp.pingjia = data.data.pingjia
+                if(data.data.hege == 1) temp.hege = "合格"
+                else if(data.data.hege == -1) temp.hege = "不合格"
+
+                this.pingjia.push(temp)
+                console.log(temp)
+
+            })
         }
     },
     created() {
         this.getTeacherMess()
+        this.getKetiMess()
+        this.getPinjiaMess()
     }
   }
 </script>

@@ -29,7 +29,7 @@ router.post('/', async (ctx, next) => {
             ctx.cookies.set('userId',doc._id,{
               domain:'localhost', // 写cookie所在的域名
               path:'/',       // 写cookie所在的路径
-              maxAge: 2*60*60*1000,   // cookie有效时长
+              maxAge: 24*60*60*1000,   // cookie有效时长
               expires:new Date('2018-02-08'), // cookie失效时间
               httpOnly:false,  // 是否只用于http请求中获取
               overwrite:false  // 是否允许重写            
@@ -128,7 +128,30 @@ router.post('/onload', async (ctx, next) => {
   const upStream = fs.createWriteStream(filePath);
   // 可读流通过管道写入可写流
   reader.pipe(upStream);
-  return ctx.body = "上传成功！";
+
+  let _id = ctx.cookies.get('userId')
+  let doc = await studentSchema.findOne({"_id": _id})
+  if(doc) {
+    doc.filename = file.name
+    let err = await doc.save()
+    if(err) {
+      ctx.body = {
+        status: 1,
+        mess: "上传成功"
+      }
+    } else {
+      ctx.body = {
+        status: -1,
+        mess: '上传失败'
+      }
+    }
+  }
+  else {
+    ctx.body = {
+      status: -1,
+      mess: '学生信息不存在'
+    }
+  }
 })
 
 router.get('/getTeaMess', async (ctx, next) => {
@@ -182,7 +205,11 @@ router.get('/getKetiMess', async (ctx, next) => {
     let teacherName = doc.teacher
     let teaDoc = await teacherSchema.findOne({"username": teacherName})
     if(teaDoc) {
-      ctx.body = teaDoc
+      ctx.body = {
+        'keti': teaDoc.keti,
+        'mess': teaDoc.ketiMess,
+        'group': doc.group
+      }
     }
     else ctx.body = {
       status: -1,
@@ -196,5 +223,53 @@ router.get('/getKetiMess', async (ctx, next) => {
     }
   }
 
+})
+
+router.get('/getMess', async (ctx) => {
+    let _id = ctx.cookies.get('userId')
+    let doc = await studentSchema.findOne({'_id': _id})
+    if(doc) {
+      ctx.body = {
+        name: doc.filename
+      }
+    }
+    else ctx.body = {
+      status: -1,
+      mess: '学生信息不存在'
+    }
+})
+
+router.get('/deleFile', async (ctx) => {
+  console.log(1)
+  let _id = ctx.cookies.get('userId')
+  let doc = await studentSchema.findOne({'_id': _id})
+  if(doc) {
+    doc.filename = ''
+    let err = await doc.save()
+    if(err) ctx.body = {
+      status: 1,
+      mess: '保存成功'
+    }
+    else ctx.body = {
+      status: -1,
+      mess: '保存失败'
+    }
+  }
+  else ctx.body = {
+    status: -1,
+    mess: '学生数据不存在'
+  }
+})
+
+router.get('/getPingjia', async ctx => {
+  let id = ctx.cookies.get('userId')
+  let doc = await studentSchema.findOne({'_id': id})
+  if(doc) {
+    ctx.body = doc
+  }
+  else ctx.body = {
+    status: -1,
+    mess: '学生信息不存在'
+  }
 })
 module.exports = router
