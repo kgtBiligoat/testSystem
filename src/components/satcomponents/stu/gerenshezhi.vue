@@ -167,6 +167,12 @@ export default {
       },
       cancer() {         
         this.$refs['form'].resetFields();           
+      },
+      getSelectMess() {
+          axios.get('/students/getSelectMess')
+          .then(data => {
+              
+          })
       }
     },
     mounted() {

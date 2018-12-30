@@ -11,7 +11,7 @@
       <el-input placeholder="请输入用户名" v-model="username">
         <template slot="prepend">用户名</template>
       </el-input>
-      <el-input placeholder="请输入密码" v-model="password">
+      <el-input placeholder="请输入密码" v-model="password" type="password">
         <template slot="prepend">密码</template>
       </el-input>
       <div >
