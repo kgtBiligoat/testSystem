@@ -80,22 +80,7 @@ export default {
         return {
             isEdit: Boolean,
             options:[
-                {
-                    value: '实验在线集成平台',
-                    label: '实验在线集成平台',
-                },
-                {
-                    value: '基于在线学习的游戏设计与应用',
-                    label: '基于在线学习的游戏设计与应用'
-                },
-                {
-                    value: '多任务路径规划与决策算法',
-                    label: '多任务路径规划与决策算法'
-                },
-                {
-                    value: '协商的围捕问题',
-                    label: '协商的围捕问题'
-                }
+
             ],
             rules: {
                 stuId: [
@@ -171,7 +156,13 @@ export default {
       getSelectMess() {
           axios.get('/students/getSelectMess')
           .then(data => {
-              
+              console.log(data)
+              data.data.teaDoc.keti.forEach(item => {
+                  let p = {}
+                  p.value = item
+                  p.label = item
+                  this.options.push(p)
+              })
           })
       }
     },
@@ -179,6 +170,7 @@ export default {
         this.$store.dispatch('getUsername')
         if(!this.keti) this.isEdit = false
         else this.isEdit = true    
+        this.getSelectMess()
     }
   }
 </script>

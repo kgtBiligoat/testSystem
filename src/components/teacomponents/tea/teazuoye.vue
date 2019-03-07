@@ -67,11 +67,12 @@ export default {
             },{responseType: 'blob'})
             .then(data => {
                 console.log(data)
+                this.$message('下载成功')
                 let url = window.URL.createObjectURL(data.data)
                 let link = document.createElement('a')
                 link.style.display = 'none'
                 link.href = url
-                link.setAttribute('download', 'llb2.png')
+                link.setAttribute('download','下载内容.rar')
                 document.body.appendChild(link)
                 link.click()
             })

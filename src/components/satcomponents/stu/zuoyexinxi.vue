@@ -79,7 +79,7 @@ import axios from 'axios'
                 temp.file = data.data.filename
                 temp.pingjia = data.data.pingjia
                 if(data.data.hege == 1) temp.hege = "合格"
-                else if(data.data.hege == -1) temp.hege = "不合格"
+                else if(data.data.hege == 2) temp.hege = "不合格"
 
                 this.pingjia.push(temp)
                 console.log(temp)

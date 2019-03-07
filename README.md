@@ -5,17 +5,27 @@
 ## Build Setup
 
 ``` bash
-# install dependencies
+#运行环境
+nodejs 8.0+
+mongodb 3.0+
+
+> 运行方式
+
+# 安装依赖包
 npm install
 
-# serve with hot reload at localhost:8080
+# 启动前端服务器
 npm run dev
 
-# build for production with minification
+# 打包生产
 npm run build
 
-# build for production and view the bundle analyzer report
+# 打包并查看打包视图
 npm run build --report
-```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+# 进入后端目录
+cd server/bin
+
+# 启动后端服务器
+node www
+```

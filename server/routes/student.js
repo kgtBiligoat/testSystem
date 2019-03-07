@@ -272,4 +272,26 @@ router.get('/getPingjia', async ctx => {
     mess: '学生信息不存在'
   }
 })
+
+router.get('/getSelectMess',async ctx => {
+  let _id = ctx.cookies.get('userId')
+  let stuDoc = await studentSchema.findOne({'_id': _id})
+  if(stuDoc) {
+    let teaName = stuDoc.teacher
+    let teaDoc = await teacherSchema.findOne({'username': teaName})
+    if(teaDoc) ctx.body = {
+      teaDoc
+    }
+    else ctx.body = {
+      status: -1,
+      mess: '教师数据不存在'
+    }
+  }
+  else {
+    ctx.body = {
+      status: -1,
+      mess: '学生信息不存在'
+    }
+  }
+})
 module.exports = router
